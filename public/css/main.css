@@ -13,7 +13,7 @@
 ********************************************************************************/
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
 
-body {
+#about {
   margin: 0;
   background: url(https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
   background-repeat: no-repeat;
@@ -73,4 +73,32 @@ img{
     position: relative;
     top: 15vh;
     left: 7vw;
+}
+
+.notFound{
+    height: 100px;
+    width: 80vw;
+    position: relative;
+    left: 10vw;
+    text-align: center;
+}
+
+#page404{
+    background: url(https://images.pexels.com/photos/952670/pexels-photo-952670.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+}
+
+#header{
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 200px;
+    position: relative;
+    color: white;
+    left: 40vw;
+    top: 10vh;
+    width: 100px;
+}
+
+.data{
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 25px;
+    color: white;  
 }

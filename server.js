@@ -59,7 +59,9 @@ app.get("/posts", function(req,res){
         res.send(err)
     })
 })
-
+app.get("*", function(req,res){
+   res.sendFile(path.join(__dirname,"/views/404.html"));
+})
 blog.initialize()
 .then(app.listen(HTTP_PORT, onHttpStart()))
 .catch((err) => console.log(err));
