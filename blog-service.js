@@ -1,10 +1,10 @@
 /*********************************************************************************
-*  WEB322 - Assignment 02
+*  WEB322 - Assignment 03
 *  I declare that this assignment is my own work in accordance with Seneca Academic Policy.  
 *  No part of this assignment has been copied manually or electronically from any other source
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Sandeep Singh Student ID: 162054217 Date: 1 February 2023
+*  Name: Sandeep Singh Student ID: 162054217 Date: 16 February 2023
 *
 *  Cyclic Web App URL: https://clumsy-tam-pike.cyclic.app/
 *
@@ -86,6 +86,93 @@ exports.getCategories = function()
     }
   });
 }
+
+exports.addPost = function(postData)
+{
+  return new Promise((resolve, reject) => {
+    if(postData.published==undefined)
+    {
+      postData.published = false
+    }
+    else{
+      postData.published = true
+    }
+    postData.id = posts.length + 1
+  const post = {
+    id : postData.id,
+    body : postData.body,
+    title :postData.title,
+    category : postData.category,
+    featureImage : postData.featureImage,
+    published : postData.published
+  }
+    posts.push(post);
+    resolve(post);
+  });
+};
+
+
+exports.getPostById = function (value) {
+  return new Promise((resolve, reject) => {
+    let returnVal={};
+    let flag = false;
+   
+
+    for(let elem in posts)
+    {
+      const post = posts[elem]
+      if(post.id == value)
+      {     
+        returnVal = post
+        break
+      }
+    } 
+    
+    if (Object.keys(returnVal).length==0) {
+      reject("No data found!");
+    } 
+
+  resolve(returnVal)
+  });
+};
+
+exports.getPostsByCategory = function (category) {
+  return new Promise((resolve, reject) => {
+    var categoryPosts = []
+
+    for(let elem in posts)
+    {
+      const post = posts[elem]
+      if(post.category == category)
+      {     
+        categoryPosts.push(post)
+      }
+    } 
+    if (categoryPosts.length == 0) {
+      reject("No results returned");
+    } 
+  resolve(categoryPosts)
+  });
+};
+
+exports.getPostsByMinDate = function (minDateStr) {
+  return new Promise((resolve, reject) => {
+    var minDatePosts = []
+
+    for(let elem in posts)
+    {
+      const post = posts[elem]
+      if(new Date(post.postDate) >= new Date(minDateStr)){
+        minDatePosts.push(post)
+      }
+    } 
+    if (minDatePosts.length == 0) {
+      reject("No results returned");
+    } 
+  resolve(minDatePosts)
+  });
+};
+
 
 exports.initialize = function () {
   return new Promise((resolve, reject) => {

@@ -1,10 +1,10 @@
 /*********************************************************************************
-*  WEB322 - Assignment 02
+*  WEB322 - Assignment 03
 *  I declare that this assignment is my own work in accordance with Seneca Academic Policy.  
 *  No part of this assignment has been copied manually or electronically from any other source
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Sandeep Singh Student ID: 162054217 Date: 1 February 2023
+*  Name: Sandeep Singh Student ID: 162054217 Date: 16 February 2023
 *
 *  Cyclic Web App URL: https://clumsy-tam-pike.cyclic.app/
 *
@@ -13,18 +13,21 @@
 ********************************************************************************/
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
 
-#about {
+body {
   margin: 0;
-  background: url(https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-  background-repeat: no-repeat;
-  background-size: cover;
+  
 }
-
-.nav {
+#about
+{
+    background: url(https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#nav {
     height: 10vh;
     background-color: black;
 }
-.navbar-brand {
+#navbar-brand {
     float: left;
     font-family: "Josefin Sans", sans-serif;
     font-size: 30px;
@@ -32,14 +35,14 @@
     padding-left: 10px;
     color: orange;
 }
-.nav-link {
+#nav-link {
     font-family: "Josefin Sans", sans-serif;
     font-size: 20px;
     color: white;
     text-decoration: none;
     padding: 7px;
 }
-.nav-link:hover {
+#nav-link:hover {
   color: aqua;
 }
 ul{
@@ -101,4 +104,13 @@ img{
     font-family: "Josefin Sans", sans-serif;
     font-size: 25px;
     color: white;  
+}
+
+#body{
+    width: 90vw;
+    height: 40vh;
+}   
+
+#dropdown{
+    width: 30vw;
 }
