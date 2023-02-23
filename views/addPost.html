@@ -39,8 +39,7 @@
         </ul>
     </nav>
     <h1>Add Post</h1>
-    <div class="conatainer-fluid">
-
+    <div class="container-fluid">
         <form class="form" action="/posts/add" method="POST" enctype="multipart/form-data">
             <h3>Feature Image</h3>
             <hr>
@@ -64,7 +63,7 @@
                     <td><label class="form-label" for="body">Category</label></td>
                     <td>
                         <select name="category" class="form-select" id="dropdown" aria-label="Default select example">
-                            <option selected>Select the category</option>
+                            <option selected value="null">Select the category</option>
                             <option value="1">Technology</option>
                             <option value="2">Gaming</option>
                             <option value="3">Fashion</option>
@@ -87,8 +86,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><input style="position: absolute; right:4vw;" class="btn btn-danger" type="submit"
-                            value="Submit" /></td>
+                    <td><button style="position: absolute; right:4vw;" class="btn btn-danger" type="submit" value="submit">Add Post</button></td>
                 </tr>
             </table>
             

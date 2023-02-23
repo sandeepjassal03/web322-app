@@ -77,6 +77,7 @@ app.get("/posts/:value", function (req,res) {
             res.send({err})
         })
 })
+
 app.get("/posts", function(req,res){
     const category = req.query.category
     const minDateStr = req.query.minDate
@@ -110,8 +111,6 @@ app.get("/posts", function(req,res){
     }
     
 })
-
-
 
 app.post("/posts/add", upload.single("featureImage"), function(req,res){
     if(req.file){
@@ -150,13 +149,11 @@ app.post("/posts/add", upload.single("featureImage"), function(req,res){
         .then(res.redirect("/posts"))
         .catch((err)=>console.log(err))        
     } 
-    
 })
 
 app.get("*", function(req,res){
    res.sendFile(path.join(__dirname,"/views/404.html"));
 })
-
 
 blog.initialize()
 .then(app.listen(HTTP_PORT, onHttpStart()))
