@@ -13,10 +13,12 @@
 ********************************************************************************/
 var HTTP_PORT = process.env.PORT || 8080;
 
-var blog = require("./blog-service")
-var express = require("express")
-var app = express()
-var path = require("path");
+const blog = require("./blog-service")
+const express = require("express")
+const exphbs = require("express-handlebars")
+const stripJs = require("strip-js")
+const app = express()
+const path = require("path");
 const multer = require("multer");
 const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier');
@@ -28,12 +30,38 @@ cloudinary.config({
     secure: true
 });
 
+app.engine(".hbs", exphbs.engine({ extname: ".hbs" }));
+app.set("view engine", ".hbs");
+
 const upload = multer(); 
 
 function onHttpStart()
 {
     console.log("The server is listening on: " + HTTP_PORT);
 }
+
+app.engine('.hbs', exphbs.engine({ 
+    extname: '.hbs',
+    helpers: { 
+        navLink: function(url, options){
+            return '<li' + 
+                ((url == app.locals.activeRoute) ? ' class="active" id="nav-item" ' : '') + 
+                '><a id="nav-link" href="' + url + '">'  + options.fn(this) + '</a></li>';
+        },
+        equal: function (lvalue, rvalue, options) {
+            if (arguments.length < 3)
+                throw new Error("Handlebars Helper equal needs 2 parameters");
+            if (lvalue != rvalue) {
+                return options.inverse(this);
+            } else {
+                return options.fn(this);
+            }
+        },
+        safeHTML: function(context){
+            return stripJs(context);
+           }              
+    }
+}));
 
 app.use(express.urlencoded({ extended : true }));
 app.use(express.static('public'))
@@ -43,29 +71,115 @@ app.get("/", function(req,res){
 })
 
 app.get("/about", function(req,res){
-    res.sendFile(path.join(__dirname,"/views/about.html"))
+    res.render("about")
 })
 
-app.get("/blog", function(req,res){
-    blog.getPublishedPosts()
-    .then((data) => {
-        res.json(data)
-    }).catch((err) => {
-        res.send({err})
-    })
-})
+app.get('/blog', async (req, res) => {
 
+    // Declare an object to store properties for the view
+    let viewData = {};
+
+    try{
+
+        // declare empty array to hold "post" objects
+        let posts = [];
+
+        // if there's a "category" query, filter the returned posts by category
+        if(req.query.category){
+            // Obtain the published "posts" by category
+            posts = await blog.getPublishedPostsByCategory(req.query.category);
+        }else{
+            // Obtain the published "posts"
+            posts = await blog.getPublishedPosts();
+        }
+
+        // sort the published posts by postDate
+        posts.sort((a,b) => new Date(b.postDate) - new Date(a.postDate));
+
+        // get the latest post from the front of the list (element 0)
+        let post = posts[0]; 
+
+        // store the "posts" and "post" data in the viewData object (to be passed to the view)
+        viewData.posts = posts;
+        viewData.post = post;
+
+    }catch(err){
+        viewData.message = "no results";
+    }
+
+    try{
+        // Obtain the full list of "categories"
+        let categories = await blog.getCategories();
+
+        // store the "categories" data in the viewData object (to be passed to the view)
+        viewData.categories = categories;
+    }catch(err){
+        viewData.categoriesMessage = "no results"
+    }
+
+    // render the "blog" view with all of the data (viewData)
+    res.render("blog", {data: viewData})
+
+});
+app.get('/blog/:id', async (req, res) => {
+
+    // Declare an object to store properties for the view
+    let viewData = {};
+
+    try{
+
+        // declare empty array to hold "post" objects
+        let posts = [];
+
+        // if there's a "category" query, filter the returned posts by category
+        if(req.query.category){
+            // Obtain the published "posts" by category
+            posts = await blog.getPublishedPostsByCategory(req.query.category);
+        }else{
+            // Obtain the published "posts"
+            posts = await blog.getPublishedPosts();
+        }
+
+        // sort the published posts by postDate
+        posts.sort((a,b) => new Date(b.postDate) - new Date(a.postDate));
+
+        // store the "posts" and "post" data in the viewData object (to be passed to the view)
+        viewData.posts = posts;
+
+    }catch(err){
+        viewData.message = "no results";
+    }
+
+    try{
+        // Obtain the post by "id"
+        viewData.post = await blog.getPostById(req.params.id);
+    }catch(err){
+        viewData.message = "no results"; 
+    }
+
+    try{
+        // Obtain the full list of "categories"
+        let categories = await blog.getCategories();
+
+        // store the "categories" data in the viewData object (to be passed to the view)
+        viewData.categories = categories;
+    }catch(err){
+        viewData.categoriesMessage = "no results"
+    }
+
+    // render the "blog" view with all of the data (viewData)
+    res.render("blog", {data: viewData})
+});
 app.get("/categories", function(req,res){
     blog.getCategories()
     .then((data) => {
-        res.json(data)
+        res.render("categories", {categories: data})
     }).catch((err) => {
-        res.send({err})
-    })
+        res.render("categories",{message: "no results"})})
 })
 
 app.get("/posts/add", function(req,res){    
-    res.sendFile(path.join(__dirname,"/views/addPost.html"))
+    res.render("addPost")
 })
 
 app.get("/posts/:value", function (req,res) {
@@ -85,9 +199,9 @@ app.get("/posts", function(req,res){
     {
         blog.getPostsByCategory(category)
         .then((data) => {
-            res.json(data)
+            res.render("posts", {posts: data})
         }).catch((err) => {
-            res.send({err})
+            res.render("posts", {message: "no results"})
         })
 
     }
@@ -95,18 +209,18 @@ app.get("/posts", function(req,res){
     {
         blog.getPostsByMinDate(minDateStr)
         .then((data) => {
-            res.json(data)
+            res.render("posts", {posts: data})
         }).catch((err) => {
-            res.send({err})
+            res.render("posts", {message: "no results"})
         })
     }
     else
     {
         blog.getAllPosts()
         .then((data) => {
-            res.json(data)
+            res.render("posts", {posts: data})
         }).catch((err) => {
-            res.send({err})
+            res.render("posts", {message: "no results"})
         })
     }
     

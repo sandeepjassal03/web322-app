@@ -15,8 +15,8 @@
 
 body {
   margin: 0;
-  
 }
+
 #about
 {
     background: url(https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
@@ -42,9 +42,11 @@ body {
     text-decoration: none;
     padding: 7px;
 }
+
 #nav-link:hover {
   color: aqua;
 }
+
 ul{
     list-style-type: none;
     margin: 0;
@@ -53,23 +55,49 @@ ul{
     float: right;
     overflow: hidden;
 }
+
 li {
  display:inline;
 }
 
+.tablePosts {
+    margin-left: 18vw;
+    display: absolute;
+    left: 18vw;
+  }
+.sidebarPosts{
+    position: relative;
+    left: 500px;
+}
+.sidebarCategories{
+    position: relative;
+    left: 82vw;
+}
 .content{
+    height: 300px;
+    width: 1000px;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    top: 10vh;
+}
+
+
+.content-1{
     height: 300px;
     width: 700px;
     font-family: "Josefin Sans", sans-serif;
     font-size: 25px;
     color: rgb(0, 0, 0);
     position: absolute;
-    left: 45vw;
-    top: 20vh;
+    left:45vw;
+    top: 10vh;
 }
 #last{
-    color:rgb(255, 255, 255);
+    color:rgb(255, 0, 0);
 }
+
 img{
     height: 400px;
     width: 500px;

@@ -1,0 +1,66 @@
+<!-- /*********************************************************************************
+*  WEB322 - Assignment 03
+*  I declare that this assignment is my own work in accordance with Seneca Academic Policy.  
+*  No part of this assignment has been copied manually or electronically from any other source
+*  (including 3rd party web sites) or distributed to other students.
+* 
+*  Name: Sandeep Singh Student ID: 162054217 Date: 16 February 2023
+*
+*  Cyclic Web App URL: https://clumsy-tam-pike.cyclic.app/
+*
+*  GitHub Repository URL: https://github.com/sandeepjassal03/web322-app
+*
+********************************************************************************/ -->
+<h1>Add Post</h1>
+<form class="form" action="/posts/add" method="POST" enctype="multipart/form-data">
+    <h3>Feature Image</h3>
+    <hr>
+    <table>
+        <tr>
+            <td><input class="form-control" id="photo" type="file" name="featureImage" /><br /></td>
+        </tr>
+    </table>
+    <h3>Post Content</h3>
+    <hr>
+    <table cellpadding="5" cellspacing="5">
+        <tr class="form-group">
+            <td><label class="form-label" for="title">Title</label></td>
+            <td><input class="form-control" id="title" type="text" name="title" /><br /></td>
+        </tr>
+        <tr class="form-group">
+            <td><label class="form-label" for="body">Body</label></td>
+            <td><textarea class="form-control" id="body" type="text" name="body"></textarea><br /></td>
+        </tr>
+        <tr class="form-group">
+            <td><label class="form-label" for="body">Category</label></td>
+            <td>
+                <select name="category" class="form-select" id="dropdown" aria-label="Default select example">
+                    <option selected value="null">Select the category</option>
+                    <option value="1">Technology</option>
+                    <option value="2">Gaming</option>
+                    <option value="3">Fashion</option>
+                    <option value="4">Education</option>
+                    <option value="5">Wellness</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="form-group">
+            <td>
+                <label class="form-label">Visibility</label>
+            </td>
+            <td>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="published">
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Published
+                    </label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><button style="position: absolute; right:4vw;" class="btn btn-danger" type="submit" value="submit">Add
+                    Post</button></td>
+        </tr>
+    </table>
+
+</form>

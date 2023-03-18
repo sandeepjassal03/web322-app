@@ -17,31 +17,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About</title>
+    <title>Sandeep Singh's Blog</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
-<body id="about">
+<body >
     <nav id="nav">
         <div id="navbar-brand">WEB322 - Sandeep Singh</div>
         <ul type="none" id="navbar">
-            <li id="nav-item"><a id="nav-link" href="/about">About</a></li>
-            <li id="nav-item"><a id="nav-link" href="/blog">Blog</a></li>
-            <li id="nav-item"><a id="nav-link" href="/categories">Categories</a></li>
-            <li id="nav-item"><a id="nav-link" href="/posts">Posts</a></li>
-            <li id="nav-item"><a id="nav-link" href="/posts/add">Add Post</a></li>
+            {{#navLink "/about"}}About{{/navLink}}
+            {{#navLink "/blog"}}Blog{{/navLink}}
+            {{#navLink "/categories"}}Categories{{/navLink}}
+            {{#navLink "/posts"}}Posts{{/navLink}}
+            {{#navLink "/posts/add"}}Add Post{{/navLink}}
         </ul>
     </nav>
-    <img src="https://images.pexels.com/photos/942317/pexels-photo-942317.jpeg?w=1260&h=750&dpr=1" alt="">
-    <div class="content">
-        <p>I'm a student and an aspiring web developer enrolled in the Computer Programming course at Seneca College, Toronto.</p>
-        <p>Besides me being passionate about development, I like to travel, and I would, one day, love to explore the story of each country in the world.</p>
-        <p>For me, this course is not just acquiring another level of education but also I will take home lots of knowledge, a good network, alongside a graduation certificate and of-course some life-long friendships.</p>
-        <br/>
-        <p id="last">Meanwhile, watch me ride on this journey. Until next time.....</p>
-        <p id="last">P.S.: Stay tuned, some more good stuff coming your way!</p>
+    <div class="content" style="width: 1000px;">
+        {{{body}}}
     </div>
 </body>
 

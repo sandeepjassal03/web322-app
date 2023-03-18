@@ -1,5 +1,5 @@
 /*********************************************************************************
-*  WEB322 - Assignment 03
+*  WEB322 - Assignment 04
 *  I declare that this assignment is my own work in accordance with Seneca Academic Policy.  
 *  No part of this assignment has been copied manually or electronically from any other source
 *  (including 3rd party web sites) or distributed to other students.
@@ -42,7 +42,26 @@ function loadCategories() {
       });
   });
 }
+exports.getPublishedPostsByCategory = function(category)
+{
+  return new Promise(function (resolve, reject){
+    var publishedPosts = []
 
+    if(posts.length == 0)
+    {
+      reject("No results to return")
+    }
+    
+      for(let elem of posts)
+      {
+        if(elem.published == true && elem.category == category)
+        {
+          publishedPosts.push(elem)
+        }
+      }  
+    resolve(publishedPosts)
+  });
+}
 exports.getPublishedPosts = function() 
 {
   return new Promise(function (resolve, reject){
