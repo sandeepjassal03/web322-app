@@ -16,69 +16,61 @@ const fs = require("fs");
 
 var posts = [], categories = [];
 
- 
+
 function loadPosts() {
-  return new Promise(function (resolve, reject){
+  return new Promise(function (resolve, reject) {
     fs.readFile("./data/posts.json", "utf-8", (err, data) => {
-        if (err) {
-          reject("File is not readable");
-        }
-          posts = JSON.parse(data);
-          resolve("Posts loaded")
-      });
+      if (err) {
+        reject("File is not readable");
+      }
+      posts = JSON.parse(data);
+      resolve("Posts loaded")
+    });
   });
 }
 
 function loadCategories() {
-  return new Promise(function(resolve, reject){
+  return new Promise(function (resolve, reject) {
     fs.readFile("./data/categories.json",
       "utf-8",
       (err, data) => {
         if (err) {
           reject("File is not readable");
         }
-          categories = JSON.parse(data);
-          resolve("Categories loaded")
+        categories = JSON.parse(data);
+        resolve("Categories loaded")
       });
   });
 }
-exports.getPublishedPostsByCategory = function(category)
-{
-  return new Promise(function (resolve, reject){
+exports.getPublishedPostsByCategory = function (category) {
+  return new Promise(function (resolve, reject) {
     var publishedPosts = []
 
-    if(posts.length == 0)
-    {
+    if (posts.length == 0) {
       reject("No results to return")
     }
-    
-      for(let elem of posts)
-      {
-        if(elem.published == true && elem.category == category)
-        {
-          publishedPosts.push(elem)
-        }
-      }  
+
+    for (let elem of posts) {
+      if (elem.published == true && elem.category == category) {
+        publishedPosts.push(elem)
+      }
+    }
     resolve(publishedPosts)
   });
 }
-exports.getPublishedPosts = function() 
-{
-  return new Promise(function (resolve, reject){
+exports.getPublishedPosts = function () {
+  return new Promise(function (resolve, reject) {
     var publishedPosts = []
 
-    if(posts.length == 0)
-    {
+    if (posts.length == 0) {
       reject("No results to return")
     }
-    
-      for(let elem of posts)
-      {
-        if(elem.published == true)
-        {
-          publishedPosts.push(elem)
-        }
-      }  
+
+    for (let elem of posts) {
+      if (elem.published == true) {
+        publishedPosts.push(elem)
+      }
+    }
     resolve(publishedPosts)
   });
 }
@@ -87,44 +79,42 @@ exports.getAllPosts = function () {
   return new Promise((resolve, reject) => {
     if (posts.length == 0) {
       reject("No results returned");
-    } 
-      resolve(posts);
+    }
+    resolve(posts);
   });
 };
 
-exports.getCategories = function() 
-{
+exports.getCategories = function () {
   return new Promise((resolve, reject) => {
-    if(categories.length == 0)
-    {
+    if (categories.length == 0) {
       reject("No results to return")
     }
-    else
-    {
+    else {
       resolve(categories)
     }
   });
 }
 
-exports.addPost = function(postData)
-{
+exports.addPost = function (postData) {
   return new Promise((resolve, reject) => {
-    if(postData.published==undefined)
-    {
+    if (postData.published == undefined) {
       postData.published = false
     }
-    else{
+    else {
       postData.published = true
     }
     postData.id = posts.length + 1
-  const post = {
-    id : postData.id,
-    body : postData.body,
-    title :postData.title,
-    category : postData.category,
-    featureImage : postData.featureImage,
-    published : postData.published
-  }
+    var d = new Date();
+    var datestring = d.getFullYear() +  "-" + ("0" + (d.getMonth() + 1)).slice(-2)+ "-" + ("0" + d.getDate()).slice(-2)
+    const post = {
+      id: postData.id,
+      body: postData.body,
+      title: postData.title,
+      postDate: datestring,
+      category: postData.category,
+      featureImage: postData.featureImage,
+      published: postData.published
+    }
     posts.push(post);
     resolve(post);
   });
@@ -133,25 +123,23 @@ exports.addPost = function(postData)
 
 exports.getPostById = function (value) {
   return new Promise((resolve, reject) => {
-    let returnVal={};
+    let returnVal = {};
     let flag = false;
-   
 
-    for(let elem in posts)
-    {
+
+    for (let elem in posts) {
       const post = posts[elem]
-      if(post.id == value)
-      {     
+      if (post.id == value) {
         returnVal = post
         break
       }
-    } 
-    
-    if (Object.keys(returnVal).length==0) {
-      reject("No data found!");
-    } 
+    }
 
-  resolve(returnVal)
+    if (Object.keys(returnVal).length == 0) {
+      reject("No data found!");
+    }
+
+    resolve(returnVal)
   });
 };
 
@@ -159,18 +147,16 @@ exports.getPostsByCategory = function (category) {
   return new Promise((resolve, reject) => {
     var categoryPosts = []
 
-    for(let elem in posts)
-    {
+    for (let elem in posts) {
       const post = posts[elem]
-      if(post.category == category)
-      {     
+      if (post.category == category) {
         categoryPosts.push(post)
       }
-    } 
+    }
     if (categoryPosts.length == 0) {
       reject("No results returned");
-    } 
-  resolve(categoryPosts)
+    }
+    resolve(categoryPosts)
   });
 };
 
@@ -178,17 +164,16 @@ exports.getPostsByMinDate = function (minDateStr) {
   return new Promise((resolve, reject) => {
     var minDatePosts = []
 
-    for(let elem in posts)
-    {
+    for (let elem in posts) {
       const post = posts[elem]
-      if(new Date(post.postDate) >= new Date(minDateStr)){
+      if (new Date(post.postDate) >= new Date(minDateStr)) {
         minDatePosts.push(post)
       }
-    } 
+    }
     if (minDatePosts.length == 0) {
       reject("No results returned");
-    } 
-  resolve(minDatePosts)
+    }
+    resolve(minDatePosts)
   });
 };
 

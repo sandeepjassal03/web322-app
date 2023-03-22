@@ -40,13 +40,20 @@ function onHttpStart()
     console.log("The server is listening on: " + HTTP_PORT);
 }
 
+app.use(function(req,res,next){
+    let route = req.path.substring(1);
+    app.locals.activeRoute = "/" + (isNaN(route.split('/')[1]) ? route.replace(/\/(?!.*)/, "") : route.replace(/\/(.*)/,
+   ""));
+    app.locals.viewingCategory = req.query.category;
+    next();
+   });
+
 app.engine('.hbs', exphbs.engine({ 
     extname: '.hbs',
     helpers: { 
         navLink: function(url, options){
-            return '<li' + 
-                ((url == app.locals.activeRoute) ? ' class="active" id="nav-item" ' : '') + 
-                '><a id="nav-link" href="' + url + '">'  + options.fn(this) + '</a></li>';
+            return '<li class="nav-item">'+ 
+                '<a class="nav-link' + ((url == app.locals.activeRoute) ? ' active" ' : '"') + '" href="' + url + '">' + options.fn(this) + '</a></li>';
         },
         equal: function (lvalue, rvalue, options) {
             if (arguments.length < 3)
@@ -67,7 +74,7 @@ app.use(express.urlencoded({ extended : true }));
 app.use(express.static('public'))
 
 app.get("/", function(req,res){
-    res.redirect('/about');
+    res.redirect('/blog');
 })
 
 app.get("/about", function(req,res){
@@ -266,7 +273,7 @@ app.post("/posts/add", upload.single("featureImage"), function(req,res){
 })
 
 app.get("*", function(req,res){
-   res.sendFile(path.join(__dirname,"/views/404.html"));
+   res.render("404")
 })
 
 blog.initialize()

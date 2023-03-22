@@ -14,131 +14,49 @@
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
 
 body {
-  margin: 0;
-}
-
-#about
-{
-    background: url(https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-#nav {
-    height: 10vh;
-    background-color: black;
-}
-#navbar-brand {
-    float: left;
-    font-family: "Josefin Sans", sans-serif;
-    font-size: 30px;
-    padding-top: 3vh;
-    padding-left: 10px;
-    color: orange;
-}
-#nav-link {
-    font-family: "Josefin Sans", sans-serif;
-    font-size: 20px;
-    color: white;
-    text-decoration: none;
-    padding: 7px;
-}
-
-#nav-link:hover {
-  color: aqua;
-}
-
-ul{
-    list-style-type: none;
     margin: 0;
-    padding-top: 3.5vh;
-    margin-right: 10px;
-    float: right;
-    overflow: hidden;
 }
 
-li {
- display:inline;
-}
-
-.tablePosts {
-    margin-left: 18vw;
-    display: absolute;
-    left: 18vw;
-  }
-.sidebarPosts{
-    position: relative;
-    left: 500px;
-}
-.sidebarCategories{
-    position: relative;
-    left: 82vw;
-}
-.content{
-    height: 300px;
-    width: 1000px;
+.text-orange
+{
     font-family: "Josefin Sans", sans-serif;
     font-size: 25px;
-    color: rgb(0, 0, 0);
-    position: absolute;
-    top: 10vh;
+    color: orange !important;
 }
 
-
-.content-1{
-    height: 300px;
-    width: 700px;
-    font-family: "Josefin Sans", sans-serif;
-    font-size: 25px;
-    color: rgb(0, 0, 0);
-    position: absolute;
-    left:45vw;
-    top: 10vh;
+.forceWidth
+{
+    width:200px !important;
 }
-#last{
-    color:rgb(255, 0, 0);
+
+.gap{
+    position: relative;
+    top:20px !important;
+}
+
+.about
+{
+    max-width:400px;
+    max-height: 400px;
+}
+.active{
+    color: aqua !important;
+}
+.nav-link:hover {
+    color: aqua !important;
+}
+
+.links{
+    margin-bottom: 50px !important;
 }
 
 img{
-    height: 400px;
-    width: 500px;
-    position: relative;
-    top: 15vh;
-    left: 7vw;
+    max-width:400px;
+    max-height: 400px;
+    margin-top: 50px;
 }
 
-.notFound{
-    height: 100px;
-    width: 80vw;
-    position: relative;
-    left: 10vw;
-    text-align: center;
-}
-
-#page404{
-    background: url(https://images.pexels.com/photos/952670/pexels-photo-952670.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-}
-
-#header{
+.head404{
     font-family: "Josefin Sans", sans-serif;
-    font-size: 200px;
-    position: relative;
-    color: white;
-    left: 40vw;
-    top: 10vh;
-    width: 100px;
-}
-
-.data{
-    font-family: "Josefin Sans", sans-serif;
-    font-size: 25px;
-    color: white;  
-}
-
-#body{
-    width: 90vw;
-    height: 40vh;
-}   
-
-#dropdown{
-    width: 30vw;
+    font-size: 500%;
 }

@@ -8,9 +8,9 @@
                 <th>Category Name</th>
             </tr>
             {{#each categories}}
-            <tr onclick="">
+            <tr>
                 <td>{{id}}</td>
-                <td>{{category}}</td>
+                <td><a href="/posts?category={{id}}" class="list-group-item">{{category}}</a></td>
             </tr>
             {{/each}}
         </table>
