@@ -1,17 +1,3 @@
-/*********************************************************************************
-*  WEB322 - Assignment 04
-*  I declare that this assignment is my own work in accordance with Seneca Academic Policy.  
-*  No part of this assignment has been copied manually or electronically from any other source
-*  (including 3rd party web sites) or distributed to other students.
-* 
-*  Name: Sandeep Singh Student ID: 162054217 Date: 22 March 2023
-*
-*  Cyclic Web App URL: https://clumsy-tam-pike.cyclic.app/
-*
-*  GitHub Repository URL: https://github.com/sandeepjassal03/web322-app
-*
-********************************************************************************/
-
 const Sequelize = require('sequelize');
 const { gte } = Sequelize.Op;
 
