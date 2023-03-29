@@ -3,18 +3,19 @@
         <section class="main col-md-9">
             {{#if data.post}}
             <article>
-                <h2>{{data.post.title}}</h2>
-                <img src="{{data.post.featureImage}}" alt="feature Image" style="width:100%" />
+                <br>
+                <h2 style="color: orange;">{{data.post.title}}</h2>
+                <img src="{{data.post.featureImage}}" alt="feature Image" style="max-width:70%" class="img-thumbnail" />
                 <br /><br />
                 {{#safeHTML data.post.body}}{{/safeHTML}}
                 <br /><br />
                 <strong>Category:</strong> {{data.post.category}}<br />
-                <strong>Last Updated:</strong> {{data.post.postDate}}
+                <strong>Last Updated:</strong> {{#formatDate data.post.postDate}}{{/formatDate}}<br />
             </article>
             {{else}}
             <div class="col-md-12 text-center">
                 <h2>{{data.message}}</h2>
-                <p>Please try another Post / Category</p>
+                <img class="img-fluid" src="https://res.cloudinary.com/dz1or2sqs/image/upload/v1680109260/No_data-amico_qal0kc.png" alt="">
             </div>
             {{/if}}
         </section>
@@ -22,34 +23,45 @@
         <aside class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
-                    {{#if data.posts}}
-                    <h4>Posts</h4>
+                    <br>
+                    <h4 class="text-orange">Posts</h4>
+                    {{#unless data.posts}}
+                    <div class="col-md-12 text-center">
+                        <h5>{{data.message}}</h5>
+                    </div>
+                    {{/unless}}
+                    {{#equal data.posts.length 0}}
+                    <div class="col-md-12 text-center">
+                        <h5>No results</h5>
+                    </div>
+                    {{else}}
                     <ul class="list-group">
                         {{#each data.posts}}
                         <a href="/blog/{{id}}?category={{category}}" class="list-group-item">{{title}}</a>
                         {{/each}}
                     </ul>
-                    {{else}}
-                    <div class="col-md-12 text-center">
-                        <h2>{{data.message}}</h2>
-                    </div>
-                    {{/if}}
+                    {{/equal}}
                 </div>
             </div>
             <div class="row gap">
                 <div class="col-md-12">
-                    {{#if data.categories}}
-                    <h4>Categories</h4>
+                    <h4 class="text-orange">Categories</h4>
+                    {{#unless data.categories}}
+                    <div class="col-md-12 text-center">
+                        <h5>{{data.categoriesMessage}}</h5>
+                    </div>
+                    {{/unless}}
+                    {{#equal data.categories.length 0}}
+                    <div class="col-md-12 text-center">
+                        <h5>No results</h5>
+                    </div>
+                    {{else}}
                     <ul class="list-group forceWidth">
                         {{#each data.categories}}
                         <a href="/blog?category={{id}}" class="list-group-item">{{category}}</a>
                         {{/each}}
                     </ul>
-                    {{else}}
-                    <div class="col-md-12 text-center">
-                        <h2>{{data.categoriesMessage}}</h2>
-                    </div>
-                    {{/if}}
+                    {{/equal}}
                 </div>
             </div>
         </aside>

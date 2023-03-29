@@ -29,9 +29,6 @@ body {
 .active{
     color: aqua !important;
 }
-.nav-link:hover {
-    color: aqua !important;
-}
 
 .links{
     margin-bottom: 50px !important;
@@ -46,4 +43,22 @@ img{
 .head404{
     font-family: "Josefin Sans", sans-serif;
     font-size: 500%;
+}
+
+.navLink {
+    display: inline-block;
+    padding: 20px;
+    border: 1px solid orange;
+    border-radius: 4px;
+    background-color: orange;
+    color: #fff !important;
+    font-weight: 600;
+    transition: transform 0.4s ease-in-out;
+}
+
+
+.navLink:hover {
+    font-weight: 800;
+    border-color: orange ;
+    color: #fff !important;
 }

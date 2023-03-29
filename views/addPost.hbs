@@ -34,14 +34,16 @@
         <tr class="form-group">
             <td><label class="form-label" for="body">Category</label></td>
             <td>
+                {{#if categories}}
                 <select name="category" class="form-select" id="dropdown" aria-label="Default select example">
-                    <option selected value="null">Select the category</option>
-                    <option value="1">Technology</option>
-                    <option value="2">Gaming</option>
-                    <option value="3">Fashion</option>
-                    <option value="4">Education</option>
-                    <option value="5">Wellness</option>
+                    <option selected value="null">Select category</option>
+                    {{#each categories}}
+                    <option value="{{id}}">{{category}}</option>
+                    {{/each}}
                 </select>
+                {{else}}
+                <a href="/categories/add" class="btn btn-outline-success mx-2">Add Categories</a>
+                {{/if}}
             </td>
         </tr>
         <tr class="form-group">
@@ -50,17 +52,14 @@
             </td>
             <td>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="published">
+                    <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked" name="published">
                     <label class="form-check-label" for="flexCheckChecked">
                         Published
                     </label>
                 </div>
             </td>
         </tr>
-        <tr>
-            <td><button style="position: absolute; right:4vw;" class="btn btn-danger" type="submit" value="submit">Add
-                    Post</button></td>
-        </tr>
     </table>
+    <button class="btn btn-outline-danger float-end" type="submit" value="submit">Add Post</button>
 
 </form>

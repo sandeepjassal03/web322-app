@@ -1,16 +1,19 @@
 <div class="row">
     <div class="col-md-12 tablePosts text-center">
-        <h2 style="color: brown;">Categories</h2>
+        <h2 class="text-orange">Categories</h2>
         <hr>
+        <a href="/categories/add" class="btn btn-outline-success mx-2">Add Categories</a>
         <table class="table table-responsive table-hover text-center text-dark">
             <tr>
                 <th>Category ID</th>
                 <th>Category Name</th>
+                <th></th>
             </tr>
             {{#each categories}}
             <tr>
                 <td>{{id}}</td>
                 <td><a href="/posts?category={{id}}" class="list-group-item">{{category}}</a></td>
+                <td><button class="btn btn-outline-danger"><a href="/categories/delete/{{id}}" class="list-group-item">Remove</a></button></td>
             </tr>
             {{/each}}
         </table>
