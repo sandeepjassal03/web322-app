@@ -23,6 +23,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse" style="margin-top: 10px;">
                     <div class="navbar-nav">
+                        {{#navLink "/blog"}}Blog{{/navLink}}
+                        {{#navLink "/about"}}About{{/navLink}}
                         {{#if session.user}}
                         {{#navLink "/posts"}}Posts{{/navLink}}
                         {{#navLink "/categories"}}Categories{{/navLink}}
@@ -40,9 +42,6 @@
                             </div>
                         </form>
                         {{else}}
-                        {{#navLink "/blog"}}Blog{{/navLink}}
-                        {{#navLink "/about"}}About{{/navLink}}
-                        
                         <li class="nav-item"><a href="/login"><button class="btn btn-light navLinkButton"><i class="bi bi-box-arrow-in-right"></i>&nbsp;Login</button></a></li>
                         <li class="nav-item"><a href="/register"><button class="btn btn-light navLinkButton"><i class="bi bi-gear"></i>&nbsp;Register</button></a>
                         </li>
