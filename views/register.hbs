@@ -1,0 +1,41 @@
+<h1>Register</h1>
+{{#if errorMessage}}
+<div class="alert alert-danger"> <strong>Error:</strong> {{errorMessage}}</div>
+{{/if}}
+{{#if successMessage}}
+<div class="alert alert-success"> <strong>Success:</strong> {{successMessage}}</div><a
+    class="btn btn-success pull-right" href="/login">&nbsp;&nbsp;&nbsp;Proceed to Login&nbsp;&nbsp;&nbsp;</a><br /><br /><br />
+{{else}}
+<form class="form" action="/register" method="POST">
+    <hr>
+    <table cellpadding="5" cellspacing="5">
+        <tr class="form-group">
+            <td><label class="form-label" for="username">User Name</label></td>
+            {{#if userName}}
+            <td><input class="form-control" placeholder="User Name" id="category" type="text" value="userName"
+                    name="userName" /><br /></td>
+            {{else}}
+            <td><input class="form-control" placeholder="User Name" id="category" type="text" name="userName"
+                    required /><br /></td>
+            {{/if}}
+        </tr>
+        <tr class="form-group">
+            <td><label class="form-label" for="password">Password</label></td>
+            <td><input class="form-control" placeholder="Password" id="pass" type="password" name="password"
+                    required /><br /></td>
+        </tr>
+        <tr class="form-group">
+            <td><label class="form-label" for="password2">Confirm Password</label></td>
+            <td><input class="form-control" placeholder="Confirm Password" id="pass" type="password" name="password2"
+                    required /><br /></td>
+        </tr>
+        <tr class="form-group">
+            <td><label class="form-label" for="email">Email</label></td>
+            <td><input class="form-control" placeholder="Email Address" id="email" type="email" name="email"
+                    required /><br /></td>
+        </tr>
+    </table>
+    <button style="position: absolute; right:4vw;" class="btn btn-outline-danger" type="submit"
+        value="Register">Register</button>
+</form>
+{{/if}}

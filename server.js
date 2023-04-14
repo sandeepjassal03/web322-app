@@ -1,10 +1,10 @@
 /*********************************************************************************
-*  WEB322 - Assignment 05
+*  WEB322 - Assignment 06
 *  I declare that this assignment is my own work in accordance with Seneca Academic Policy.  
 *  No part of this assignment has been copied manually or electronically from any other source
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Sandeep Singh Student ID: 162054217 Date: 28 March 2023
+*  Name: Sandeep Singh Student ID: 162054217 Date: 8 April 2023
 *
 *  Cyclic Web App URL: https://clumsy-tam-pike.cyclic.app/
 *
@@ -12,16 +12,18 @@
 *
 ********************************************************************************/
 var HTTP_PORT = process.env.PORT || 8080;
-
 const blog = require("./blog-service")
+const authData = require("./auth-service")
+
 const express = require("express")
 const exphbs = require("express-handlebars")
 const stripJs = require("strip-js")
-const app = express()
-const path = require("path");
+const clientSessions = require("client-sessions")
 const multer = require("multer");
 const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier');
+
+const app = express()
 
 cloudinary.config({
     cloud_name: 'dz1or2sqs',
@@ -50,12 +52,12 @@ app.use(function (req, res, next) {
 app.engine('.hbs', exphbs.engine({
     extname: '.hbs',
     helpers: {
-        navLink: function(url, options){
-            return '<li class="nav-item">'+ 
+        navLink: function (url, options) {
+            return '<li class="nav-item">' +
                 '<a class="nav-link' + ((url == app.locals.activeRoute) ? ' navLink" ' : '"') + '" href="' + url + '">' + options.fn(this) + '</a></li>';
         },
         equal: function (lvalue, rvalue, options) {
-            if (arguments.length < 3) 
+            if (arguments.length < 3)
                 throw new Error("Handlebars Helper equal needs 2 parameters");
             if (lvalue != rvalue) {
                 return options.inverse(this);
@@ -77,6 +79,26 @@ app.engine('.hbs', exphbs.engine({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
+
+app.use(clientSessions({
+    cookieName: "session",
+    secret: "Assignment_6_Web322",
+    duration: 2 * 60 * 1000,
+    activeDuration: 1000 * 60
+}));
+
+app.use(function (req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
+
+function ensureLogin(req, res, next) {
+    if (!req.session.user) {
+        res.redirect("/login");
+    } else {
+        next();
+    }
+}
 
 app.get("/", function (req, res) {
     res.redirect('/blog');
@@ -183,7 +205,7 @@ app.get("/blog/:id", async (req, res) => {
     console.log(viewData.message);
     res.render("blog", { data: viewData })
 });
-app.get("/categories", function (req, res) {
+app.get("/categories", ensureLogin, function (req, res) {
     blog.getCategories()
         .then((data) => {
             if (data.length > 0) {
@@ -197,18 +219,18 @@ app.get("/categories", function (req, res) {
         })
 })
 
-app.get("/posts/add", function (req, res) {
+app.get("/posts/add", ensureLogin, function (req, res) {
     blog.getCategories()
         .then((data) => res.render("addPost", { categories: data }))
         .catch(() => res.render("addPost", { categories: [] }))
 })
 
 
-app.get("/categories/add", function (req, res) {
+app.get("/categories/add", ensureLogin, function (req, res) {
     res.render("addCategory")
 })
 
-app.get("/posts/:value", function (req, res) {
+app.get("/posts/:value", ensureLogin, function (req, res) {
     const value = req.params.value
     blog.getPostById(value)
         .then((data) => {
@@ -218,7 +240,7 @@ app.get("/posts/:value", function (req, res) {
         })
 })
 
-app.get("/posts", function (req, res) {
+app.get("/posts", ensureLogin, function (req, res) {
     const category = req.query.category
     const minDateStr = req.query.minDate
     if (category) {
@@ -264,7 +286,7 @@ app.get("/posts", function (req, res) {
 
 })
 
-app.post("/posts/add", upload.single("featureImage"), function (req, res) {
+app.post("/posts/add", upload.single("featureImage"), ensureLogin, function (req, res) {
     if (req.file) {
         let streamUpload = (req) => {
             return new Promise((resolve, reject) => {
@@ -302,24 +324,68 @@ app.post("/posts/add", upload.single("featureImage"), function (req, res) {
     }
 })
 
-app.post("/categories/add", function (req, res) {
+app.post("/categories/add", ensureLogin, function (req, res) {
     blog.addCategory(req.body)
         .then(() => res.redirect("/categories"))
         .catch((err) => console.log(err))
 })
 
-app.get("/posts/delete/:value", function (req, res) {
+app.post("/login", function (req, res) {
+    req.body.userAgent = req.get('User-Agent');
+    authData.checkUser(req.body)
+        .then((user) => {
+            req.session.user = {
+                userName: user.userName,
+                email: user.email,
+                loginHistory: user.loginHistory
+            }
+            res.redirect('/posts');
+        })
+        .catch((err) => {
+            res.render("login", {errorMessage: err, userName: req.body.userName})
+        })
+
+})
+
+app.post("/register", function (req, res) {
+    authData.registerUser(req.body)
+        .then(() => {
+            res.render("register", { successMessage: "User created" })
+        })
+        .catch((err) => {
+            res.render("register", { errorMessage: err, userName: req.body.userName })
+        })
+})
+
+app.get("/posts/delete/:value", ensureLogin, function (req, res) {
     const value = req.params.value
     blog.deletePostById(value)
         .then(() => res.redirect("/posts"))
         .catch(() => res.status(500).send("Unable to Remove Post / Post not found)"))
 })
 
-app.get("/categories/delete/:value", function (req, res) {
+app.get("/categories/delete/:value", ensureLogin, function (req, res) {
     const value = req.params.value
     blog.deleteCategoryById(value)
         .then(() => res.redirect("/categories"))
         .catch(() => res.status(500).send("Unable to Remove Category / Category not found)"))
+})
+
+app.get("/login", function (req, res) {
+    res.render("login")
+})
+
+app.get("/register", function (req, res) {
+    res.render("register")
+})
+
+app.get("/logout", function (req, res) {
+    req.session.reset();
+    res.redirect("/")
+})
+
+app.get("/userHistory", ensureLogin, function (req, res) {
+    res.render("userHistory")
 })
 
 app.get("*", function (req, res) {
@@ -327,5 +393,6 @@ app.get("*", function (req, res) {
 })
 
 blog.initialize()
-    .then(app.listen(HTTP_PORT, onHttpStart()))
-    .catch((err) => console.log(err));
+    .then(authData.initialize)
+    .then(() => app.listen(HTTP_PORT, onHttpStart()))
+    .catch((err) => console.log("Unable to start server: " + err))

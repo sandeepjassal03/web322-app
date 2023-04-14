@@ -1,0 +1,18 @@
+<h1>Login</h1>
+{{#if errorMessage}}
+<div class="alert alert-danger"> <strong>Error:</strong> {{errorMessage}}</div> 
+{{/if}}
+<form class="form" action="/login" method="POST">
+    <hr>
+    <table cellpadding="5" cellspacing="5">
+        <tr class="form-group">
+            <td><label class="form-label" for="username">User Name</label></td>
+            <td><input class="form-control" placeholder="User Name" id="category" type="text" name="userName" /><br /></td>
+        </tr>
+        <tr class="form-group">
+            <td><label class="form-label" for="password">Password</label></td>
+            <td><input class="form-control" placeholder="Password" id="pass" type="password" name="password" /><br /></td>
+        </tr>
+    </table>
+    <button style="position: absolute; right:4vw;" class="btn btn-outline-danger" type="submit" value="Login">Login</button>
+</form>

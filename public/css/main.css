@@ -4,6 +4,7 @@ body {
     margin: 0;
 }
 
+
 .text-orange
 {
     font-family: "Josefin Sans", sans-serif;
@@ -48,17 +49,37 @@ img{
 .navLink {
     display: inline-block;
     padding: 20px;
+    margin-right: 9px;
     border: 1px solid orange;
-    border-radius: 4px;
     background-color: orange;
+    border-radius: 4px;
     color: #fff !important;
     font-weight: 600;
     transition: transform 0.4s ease-in-out;
 }
 
+.navLinkButton {
+    display: inline-block;
+    padding: 20px;
+    margin-right: 9px;
+    margin-top: 4px;
+    border-radius: 4px;
+    color: #000000 !important;
+    font-weight: 600;
+    transition: transform 0.4s ease-in-out;
+}
 
 .navLink:hover {
     font-weight: 800;
     border-color: orange ;
     color: #fff !important;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
 }
